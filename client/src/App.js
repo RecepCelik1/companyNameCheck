@@ -1,8 +1,8 @@
 function App() {
 
-  async function getCompanyInfo(companyNumber) {
-    companyNumber = "Marine"
-    const apiUrl = `http://localhost:5000/company/${companyNumber}`;
+  async function getCompanyInfo(companyName) {
+    companyName = "Marine" //aranacak isim manuel olarak giriliyor şu anlık
+    const apiUrl = `http://localhost:5000/company/${companyName}`;
   
     try {
       const response = await fetch(apiUrl);

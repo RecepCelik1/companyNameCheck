@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors')
-const bodyParser = require('body-parser')
 const dotenv = require('dotenv');
 
 
@@ -16,9 +15,9 @@ const apiKey = '8dc91acf-5646-4c5d-abef-5524ea035071';
 
 const PORT = 5000;
 
-app.get('/company/:companyNumber', async (req, res) => {
-    const companyNumber = req.params.companyNumber;
-    const apiUrl = `https://api.company-information.service.gov.uk/advanced-search/companies?company_name_includes=${companyNumber}`;
+app.get('/company/:companyName', async (req, res) => {
+    const companyName = req.params.companyName;
+    const apiUrl = `https://api.company-information.service.gov.uk/advanced-search/companies?company_name_includes=${companyName}`;
   
     try {
       const response = await fetch(apiUrl, {
