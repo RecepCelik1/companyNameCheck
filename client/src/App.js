@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
+import { FaRegCircleCheck } from "react-icons/fa6";
+import { FaRegCircleXmark } from "react-icons/fa6";
+import { IconContext } from 'react-icons';
 
 function App() {
 
   const [CompanyName , setCompanyName] = useState("")
+  const [dataValue , setDataValue] = useState()
+  const [result , setResult] = useState("")
 
   const handleInputChange = (event) => {
-    setCompanyName(event.target.value)
+    setCompanyName(event.target.value.toUpperCase())
   }
-
   
-
   async function getCompanyInfo() {
+    setResult(CompanyName)
     const apiUrl = `http://localhost:5000/company/${CompanyName}`;
   
     try {
@@ -18,14 +22,15 @@ function App() {
       if (!response.ok) {
         throw new Error('API request failed man');
       }
-  
+      
       const data = await response.json();
-      console.log('Company Info:', data);
+      setDataValue(data)
     } catch (error) {
       console.error('Error:', error.message);
     }
   }
-  
+  console.log(dataValue)
+
 
   return (
     <div className="bg-[#252525] h-screen flex justify-center">
@@ -33,8 +38,25 @@ function App() {
       <div className='flex flex-col mt-48'>
         
         <input className='h-8 p-2' onChange={(e)=> handleInputChange(e)}></input>
-        <button className="text-white mt-4" onClick={getCompanyInfo}>Company info</button>
-        
+        <button className={`text-white mt-4 bg-emerald-700 h-8 ${!CompanyName && 'opacity-50 cursor-not-allowed'}`} onClick={getCompanyInfo} disabled={!CompanyName}>Check</button>
+
+        {dataValue === false ? (
+  <IconContext.Provider value={{ color: "green", className: "global-class-name", size: "2em" }}>
+    <div className='mt-3 flex'>
+      <FaRegCircleCheck />
+      <div className='text-white ml-2 mt-1'>CONGRATULATIONS! {result} IS AVAILABLE</div>
+    </div>
+  </IconContext.Provider>
+) : (
+  <div>
+      <IconContext.Provider value={{ color: "red", className: "global-class-name", size: "2em" }}>
+    <div className='mt-3 flex'>
+      <FaRegCircleXmark />
+      <div className='text-white ml-2 mt-1'>SORRY! {result} IS NOT AVAILABLE</div>
+    </div>
+  </IconContext.Provider>
+  </div>
+)}
       </div>
         
     </div>
