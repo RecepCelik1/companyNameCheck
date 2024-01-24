@@ -25,7 +25,7 @@ app.get('/company/:companyName', async (req, res) => {
     const apiUrlBase = 'https://api.company-information.service.gov.uk/advanced-search/companies';
   
     async function fetchData(startIndex) {
-      const apiUrl = `${apiUrlBase}?company_name_includes=${companyName}&size=${pageSize}&company_status=active&start_index=${startIndex}`;
+      const apiUrl = `${apiUrlBase}?company_name_includes=${companyName}&size=${pageSize}&company_status=active&company_status=open&company_status=liquidation&start_index=${startIndex}`;
   
       const startDate = Date.now();
       try {
